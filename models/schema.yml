@@ -23,28 +23,27 @@
          tests:
            - unique:
                column_name: "(orders_id || '-' || pdt_id)" 
-           ## OR ## if dbt_utils is installed
-           - dbt_utils.unique_combination_of_columns:
-               combination_of_columns:
-                 - orders_id
-                 - pdt_id" 
-
+         
        - name: product
          identifier: raw_gz_product
          description: products of Greenweez
          columns:
            - name: products_id
+             tests:
+               - unique
+               - not_null   
              description: Primary key
            - name: purchase_price
              description: the purchase price of the product
-             tests:
-               - unique
-               - not_null                            
+                                      
        - name: ship
          identifier: raw_gz_ship
          description: shipping data for Greenweez orders
          columns:
            - name: orders_id
+             tests:
+               - unique
+               - not_null
              description: Primary key
            - name: shipping_fee
              description: the price the customer pays for shipping
@@ -52,7 +51,4 @@
              description: the cost of preparing the parcel in the distribution centre/warehouse
            - name: ship_cost
              description: shipping cost paid by Greenweez to the carrier/logistics provider
-             tests:
-               - unique
-               - not_null
-               
+             
